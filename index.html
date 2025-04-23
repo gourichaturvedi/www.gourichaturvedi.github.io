@@ -1,0 +1,444 @@
+<html>
+    <head>
+        <title>Gouri Chaturvedi - Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+            :root {
+                --bg-color: #ffffff;
+                --text-color: #333;
+                --dock-bg: rgba(255, 255, 255, 0.95);
+                --dock-shadow: rgba(0, 0, 0, 0.1);
+                --hover-bg: rgba(0, 123, 255, 0.1);
+                --gradient-start: #f5f7fa;
+                --gradient-end: #ffffff;
+                --grid-color: rgba(0, 0, 0, 0.03);
+            }
+
+            [data-theme="dark"] {
+                --bg-color: #1a1a1a;
+                --text-color: #ffffff;
+                --dock-bg: rgba(26, 26, 26, 0.95);
+                --dock-shadow: rgba(0, 0, 0, 0.3);
+                --hover-bg: rgba(0, 123, 255, 0.2);
+                --gradient-start: #2d2d2d;
+                --gradient-end: #1a1a1a;
+                --grid-color: rgba(255, 255, 255, 0.03);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Inter', sans-serif;
+            }
+
+            body {
+                min-height: 100vh;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: 
+                    linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+                background-size: 100% 100%, 20px 20px, 20px 20px;
+                color: var(--text-color);
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: 
+                    radial-gradient(circle at 50% 50%, 
+                        rgba(255, 255, 255, 0.1) 0%, 
+                        transparent 50%),
+                    radial-gradient(circle at 0% 0%, 
+                        rgba(255, 255, 255, 0.1) 0%, 
+                        transparent 50%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            [data-theme="dark"] body::before {
+                background: 
+                    radial-gradient(circle at 50% 50%, 
+                        rgba(255, 255, 255, 0.05) 0%, 
+                        transparent 50%),
+                    radial-gradient(circle at 0% 0%, 
+                        rgba(255, 255, 255, 0.05) 0%, 
+                        transparent 50%);
+            }
+
+            .dock-container, .theme-switcher, .hero, .footer {
+                position: relative;
+                z-index: 1;
+            }
+
+            .theme-switcher {
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: var(--dock-bg);
+                padding: 0.8rem;
+                border-radius: 50%;
+                cursor: pointer;
+                box-shadow: 0 2px 10px var(--dock-shadow);
+                backdrop-filter: blur(10px);
+                z-index: 1001;
+                transition: all 0.3s ease;
+            }
+
+            .theme-switcher:hover {
+                transform: scale(1.1);
+            }
+
+            .theme-switcher i {
+                font-size: 1.2rem;
+                color: var(--text-color);
+            }
+
+            .dock-container {
+                position: fixed;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 2rem;
+                z-index: 1000;
+            }
+
+            .left-dock {
+                position: fixed;
+                left: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                background: var(--dock-bg);
+                padding: 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 4px 20px var(--dock-shadow);
+                backdrop-filter: blur(10px);
+            }
+
+            .right-dock {
+                position: fixed;
+                right: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                background: var(--dock-bg);
+                padding: 1.2rem;
+                border-radius: 20px;
+                box-shadow: 0 4px 20px var(--dock-shadow);
+                backdrop-filter: blur(10px);
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 3px solid var(--bg-color);
+                box-shadow: 0 2px 10px var(--dock-shadow);
+                transition: transform 0.3s ease;
+            }
+
+            .profile-pic:hover {
+                transform: scale(1.1);
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: var(--text-color);
+                text-align: center;
+            }
+
+            .profile-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            .profile-degree {
+                font-size: 0.9rem;
+                color: var(--text-color);
+                font-weight: 500;
+            }
+
+            .profile-pronouns {
+                font-size: 0.8rem;
+                color: var(--text-color);
+                opacity: 0.6;
+                font-style: italic;
+            }
+
+            .social-icons {
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+
+            .social-icons a {
+                color: var(--text-color);
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                border-radius: 10px;
+            }
+
+            .social-icons a:hover {
+                color: #007bff;
+                transform: translateX(5px);
+                background: var(--hover-bg);
+            }
+
+            .hero {
+                flex: 1;
+                padding: 4rem;
+                text-align: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                background: linear-gradient(135deg, var(--text-color) 0%, #666 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: fadeInUp 1s ease;
+                text-align: center;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                color: var(--text-color);
+                margin-bottom: 1rem;
+                animation: fadeInUp 1s ease 0.2s;
+                animation-fill-mode: both;
+                text-align: center;
+            }
+
+            .location-box {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                background: var(--dock-bg);
+                border-radius: 20px;
+                box-shadow: 0 2px 10px var(--dock-shadow);
+                margin-bottom: 2rem;
+                font-size: 0.9rem;
+                color: var(--text-color);
+                animation: fadeInUp 1s ease 0.3s;
+                animation-fill-mode: both;
+                backdrop-filter: blur(10px);
+                border: 1px solid var(--dock-shadow);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .location-box:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px var(--dock-shadow);
+                background: var(--hover-bg);
+            }
+
+            .location-box i {
+                color: #007bff;
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                animation: fadeInUp 1s ease 0.4s;
+                animation-fill-mode: both;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: none;
+                font-size: 1rem;
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+                color: white;
+            }
+
+            .btn-secondary {
+                background: var(--dock-bg);
+                color: var(--text-color);
+                box-shadow: 0 2px 10px var(--dock-shadow);
+            }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px var(--dock-shadow);
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: var(--dock-bg);
+                padding: 0.8rem 0;
+                text-align: center;
+                box-shadow: 0 -1px 5px var(--dock-shadow);
+                font-size: 1rem;
+                color: var(--text-color);
+                backdrop-filter: blur(5px);
+                animation: footerFloat 1.5s ease-out;
+                transform: translateY(0);
+            }
+
+            .footer-links {
+                font-family: 'Inter', sans-serif;
+                letter-spacing: 0.5px;
+                font-weight: 600;
+            }
+
+            @keyframes footerFloat {
+                0% {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+    <body data-theme="dark">
+        <div class="theme-switcher" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </div>
+
+        <div class="dock-container">
+            <div class="left-dock">
+                <img src="BOSSBITXH-small.png" alt="Gouri Chaturvedi" class="profile-pic">
+                <div class="profile-info">
+                    <span class="profile-name">Gouri Chaturvedi</span>
+                    <span class="profile-degree">B.Tech Undergrad (IT)</span>
+                </div>
+            </div>
+
+            <div class="right-dock">
+                <div class="social-icons">
+                    <a href="https://github.com/gourichaturvedi" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/gourichaturvedi" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="mailto:gourichaturvedi2003@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section class="hero">
+            <h1>Hi, I'm Gouri Chaturvedi</h1>
+            <p>Information Technology Student | Web Developer</p>
+            <div class="location-box" onclick="window.open('https://www.google.com/maps/place/Nirsa,+Jharkhand+828205/', '_blank')">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Nirsa, Dhanbad, JH - India</span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="copyEmail()">Copy Email</button>
+                <button class="btn btn-secondary" onclick="downloadResume()">Download Resume</button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-links">
+                Made with ♥️ by Gouri Chaturvedi | © 2025
+            </div>
+        </footer>
+
+        <script>
+            function copyEmail() {
+                navigator.clipboard.writeText('gourichaturvedi2003@gmail.com');
+                alert('Email copied to clipboard!');
+            }
+
+            function downloadResume() {
+                // Add your resume download logic here
+                alert('Resume download will be available soon!');
+            }
+
+            function toggleTheme() {
+                const body = document.body;
+                const themeSwitcher = document.querySelector('.theme-switcher i');
+                
+                if (body.getAttribute('data-theme') === 'dark') {
+                    body.removeAttribute('data-theme');
+                    themeSwitcher.classList.remove('fa-moon');
+                    themeSwitcher.classList.add('fa-sun');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    themeSwitcher.classList.remove('fa-sun');
+                    themeSwitcher.classList.add('fa-moon');
+                }
+            }
+        </script>
+    </body>
+</html>
